@@ -12,7 +12,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
 
-        /* Login Screen */
         #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #f3f2f1; text-align: center; }
         .login-card { width: 400px; padding: 40px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .login-card h2 { color: #202124; font-size: 24px; margin-bottom: 8px; }
@@ -24,7 +23,6 @@
         .oauth-logo { width: 20px; height: 20px; }
         .shortcut-hint { font-size: 12px; color: #999; margin-top: 12px; }
 
-        /* Home Screen */
         #home-screen { display: none; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 60px; height: 100vh; text-align: center; overflow-y: auto; position: relative; }
         #home-screen h1 { font-size: 42px; color: var(--text-color); margin-bottom: 10px; }
         #home-screen p { font-size: 16px; color: #605e5c; margin-bottom: 30px; }
@@ -47,7 +45,6 @@
         .storage-badge { position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 8px; background: #fff; padding: 8px 16px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 13px; color: #605e5c; }
         .storage-badge i { color: #107c10; }
 
-        /* App Screen */
         #app-screen { display: none; flex-direction: column; height: 100vh; }
         .toolbar { background: #fff; padding: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; z-index: 10; }
         .group { display: flex; gap: 4px; padding-right: 8px; border-right: 1px solid #edebe9; }
@@ -64,7 +61,6 @@
         .hidden-input { display: none; }
         .current-board-name { font-size: 14px; color: #605e5c; margin-left: 10px; font-weight: bold; }
 
-        /* Custom Modals */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 100; }
         .modal-box { background: #fff; padding: 30px; border-radius: 12px; width: 400px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
         .modal-box h3 { font-size: 22px; margin-bottom: 15px; color: var(--text-color); }
@@ -83,19 +79,15 @@
 </head>
 <body>
 
-    <!-- LOGIN SCREEN -->
     <div id="login-screen">
         <div class="login-card">
             <h2>Sign in</h2>
             <p>Use your Google or Apple ID to continue</p>
-            
             <input type="email" class="login-input-main" id="login-email" placeholder="Email address" autofocus>
-            
             <button class="oauth-btn" onclick="attemptLogin('google')">
                 <svg class="oauth-logo" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
                 Continue with Google
             </button>
-            
             <button class="oauth-btn" onclick="attemptLogin('apple')">
                 <svg class="oauth-logo" viewBox="0 0 384 512"><path fill="#000" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
                 Continue with Apple
@@ -104,11 +96,8 @@
         </div>
     </div>
 
-    <!-- HOME INTERFACE -->
     <div id="home-screen">
-        <div class="storage-badge">
-            <i class="fas fa-cloud"></i> Supabase Cloud Storage
-        </div>
+        <div class="storage-badge"><i class="fas fa-cloud"></i> Supabase Cloud Storage</div>
         <div class="user-badge">
             <div class="user-avatar" id="user-avatar">T</div>
             <span id="user-email">teacher@email.com</span>
@@ -122,7 +111,6 @@
         <div class="cloud-list" id="cloud-list"></div>
     </div>
 
-    <!-- WHITEBOARD APP -->
     <div id="app-screen">
         <div class="toolbar">
             <div class="group">
@@ -131,7 +119,6 @@
                 <button class="btn" id="btn-share" title="Copy Share Link"><i class="fas fa-share-nodes"></i></button>
                 <span class="current-board-name" id="current-board-name">Untitled Board</span>
             </div>
-
             <div class="group">
                 <button class="btn" id="btn-insert-image" title="Insert Image"><i class="fas fa-image"></i></button>
                 <input type="file" id="image-input" class="hidden-input" accept="image/*">
@@ -140,16 +127,15 @@
                 <button class="btn" id="btn-bg-image" title="Set Custom Image Background"><i class="fas fa-mountain-sun"></i></button>
                 <input type="file" id="bg-input" class="hidden-input" accept="image/*">
             </div>
-
             <div class="group">
                 <button class="btn active" id="btn-select" title="Select"><i class="fas fa-mouse-pointer"></i></button>
+                <button class="btn" id="btn-pan" title="Pan (Move Canvas)"><i class="fas fa-hand"></i></button>
                 <button class="btn" id="btn-pen" title="Pen"><i class="fas fa-pen"></i></button>
                 <button class="btn" id="btn-marker" title="Marker"><i class="fas fa-marker"></i></button>
                 <button class="btn" id="btn-pencil" title="Pencil"><i class="fas fa-pencil-alt"></i></button>
                 <button class="btn" id="btn-highlighter" title="Highlighter"><i class="fas fa-highlighter"></i></button>
                 <button class="btn" id="btn-eraser" title="Eraser (Particle Erase)"><i class="fas fa-eraser"></i></button>
             </div>
-
             <div class="group colors">
                 <div class="swatch active" style="background:#000000" data-color="#000000"></div>
                 <div class="swatch" style="background:#FF0000" data-color="#FF0000"></div>
@@ -160,12 +146,10 @@
                 <div class="swatch" style="background:#FFFFFF; border:1px solid #ccc;" data-color="#FFFFFF"></div>
                 <input type="range" min="1" max="50" value="3" id="size">
             </div>
-
             <div class="group">
                 <button class="btn" id="btn-text" title="Add Text"><i class="fas fa-font"></i></button>
                 <button class="btn" id="btn-note" title="Add Sticky Note"><i class="fas fa-sticky-note"></i></button>
             </div>
-
             <div class="group">
                 <button class="btn" id="btn-shape-line" title="Line"><i class="fas fa-minus"></i></button>
                 <button class="btn" id="btn-shape-arrow" title="Arrow"><i class="fas fa-arrow-right"></i></button>
@@ -177,14 +161,12 @@
                 <button class="btn" id="btn-shape-star" title="Star"><i class="fas fa-star"></i></button>
                 <button class="btn" id="btn-shape-hexagon" title="Hexagon"><i class="fab fa-hive" style="transform: rotate(30deg);"></i></button>
             </div>
-
             <div class="group">
                 <button class="btn" id="btn-undo" title="Undo"><i class="fas fa-undo"></i></button>
                 <button class="btn" id="btn-redo" title="Redo"><i class="fas fa-redo"></i></button>
                 <button class="btn" id="btn-clear" title="Dustbin (Clear All Drawings)"><i class="fas fa-trash"></i></button>
             </div>
         </div>
-
         <div id="canvas-container">
             <canvas id="board"></canvas>
             <div class="zoom-bar">
@@ -196,7 +178,6 @@
         </div>
     </div>
 
-    <!-- CUSTOM SAVE MODAL -->
     <div class="modal-overlay" id="save-modal">
         <div class="modal-box">
             <h3><i class="fas fa-cloud-arrow-up" style="color: var(--primary); margin-right: 10px;"></i>Save Whiteboard</h3>
@@ -208,7 +189,6 @@
         </div>
     </div>
 
-    <!-- CUSTOM SHARE MODAL -->
     <div class="modal-overlay" id="share-modal">
         <div class="modal-box">
             <h3><i class="fas fa-share-nodes" style="color: var(--primary); margin-right: 10px;"></i>Share Whiteboard</h3>
@@ -221,13 +201,9 @@
         </div>
     </div>
 
-    <!-- TOAST NOTIFICATION -->
     <div class="toast" id="toast">Saved successfully!</div>
 
 <script>
-// ==========================================
-// --- SUPABASE CLOUD STORAGE CONFIGURATION ---
-// ==========================================
 const SUPABASE_URL = "https://omxtjcrxrunfjexytsmj.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9teHRqY3J4cnVuZmpleHl0c21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4OTQ2MDEsImV4cCI6MjEwMDQ3MDYwMX0.OoPGqGEIiy0hNoM3UdgVZFzF5gEDGD6kdb1LDMHb4NM";
 const BUCKET_NAME = "whiteboard cloud storage";
@@ -235,7 +211,6 @@ const BUCKET_NAME = "whiteboard cloud storage";
 let supabaseClient = null;
 let sanitizedUser = 'guest';
 
-// Initialize Supabase Client
 try {
     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 } catch (e) {
@@ -249,14 +224,10 @@ let activeShape = null, startX = 0, startY = 0, isDrawingShape = false;
 let isErasing = false, history = [], historyIndex = -1, isRestoring = false;
 let currentUser = null, currentBoardId = null, currentBoardName = "Untitled Board";
 
-// SATISFYING ERASER CURSOR SETUP
 const svgString = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="rgba(217,48,37,0.2)" stroke="#d93025" stroke-width="2"/></svg>';
 const eraserCursorUrl = 'url("data:image/svg+xml;base64,' + btoa(svgString) + '") 16 16, crosshair';
 let erasedSomething = false;
 
-// ==========================================
-// --- GLOBAL HISTORY FUNCTIONS ---
-// ==========================================
 function saveState() { 
     if (isRestoring) return; 
     historyIndex++; 
@@ -286,24 +257,17 @@ function redo() {
     } 
 }
 
-// ==========================================
-// --- LOGIN FUNCTION ---
-// ==========================================
 function attemptLogin(provider) {
     let email = document.getElementById('login-email').value.trim();
-    
     if (!email) {
         if (provider === 'apple') email = 'apple_teacher@classroom.com';
         else if (provider === 'google') email = 'google_teacher@classroom.com';
         else email = 'guest_teacher@classroom.com';
     }
-
     if (email && email.includes('@') && email.includes('.')) {
         currentUser = email;
         sanitizedUser = currentUser.replace(/[^a-zA-Z0-9]/g, '_'); 
-        try { 
-            localStorage.setItem('tw_current_user', currentUser);
-        } catch(e) {}
+        try { localStorage.setItem('tw_current_user', currentUser); } catch(e) {}
         showHome();
     } else {
         showToast('Please enter a valid email address to continue.', true);
@@ -312,11 +276,11 @@ function attemptLogin(provider) {
 
 window.onload = function() {
     if (typeof fabric === 'undefined') { 
-        document.body.innerHTML = '<h1 style="color:red; text-align:center; margin-top:50px;">Error: Fabric.js Library failed to load. Check internet connection.</h1>'; 
+        document.body.innerHTML = '<h1 style="color:red; text-align:center; margin-top:50px;">Error: Fabric.js Library failed to load.</h1>'; 
         return; 
     }
     if (!supabaseClient) {
-        document.body.innerHTML = '<h1 style="color:red; text-align:center; margin-top:50px;">Error: Supabase Client failed to initialize. Check API keys.</h1>'; 
+        document.body.innerHTML = '<h1 style="color:red; text-align:center; margin-top:50px;">Error: Supabase Client failed to initialize.</h1>'; 
         return;
     }
 
@@ -324,13 +288,17 @@ window.onload = function() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    const tools = ['select', 'pen', 'marker', 'pencil', 'highlighter', 'eraser', 'shape-line', 'shape-arrow', 'shape-rect', 'shape-circle', 'shape-triangle', 'shape-right-tri', 'shape-diamond', 'shape-star', 'shape-hexagon'];
+    const tools = ['select', 'pan', 'pen', 'marker', 'pencil', 'highlighter', 'eraser', 'shape-line', 'shape-arrow', 'shape-rect', 'shape-circle', 'shape-triangle', 'shape-right-tri', 'shape-diamond', 'shape-star', 'shape-hexagon'];
     tools.forEach(function(tool) {
         const btn = document.getElementById('btn-' + tool);
         if (btn) btn.addEventListener('click', function() {
             currentTool = tool; updateToolUI();
             if (tool === 'select') { 
                 canvas.isDrawingMode = false; canvas.selection = true; canvas.defaultCursor = 'default'; canvas.hoverCursor = 'move'; 
+            } else if (tool === 'pan') { 
+                canvas.isDrawingMode = false; canvas.selection = false; 
+                canvas.defaultCursor = 'grab'; 
+                canvas.hoverCursor = 'grab';
             } else if (tool === 'eraser') { 
                 canvas.isDrawingMode = false; canvas.selection = false; 
                 canvas.defaultCursor = eraserCursorUrl; 
@@ -448,7 +416,14 @@ window.onload = function() {
     }
 
     canvas.on('mouse:down', function(opt) {
-        if (isPanning) { let evt = opt.e; isDragging = true; canvas.selection = false; lastPosX = evt.clientX; lastPosY = evt.clientY; } 
+        if (isPanning || currentTool === 'pan') { 
+            let evt = opt.e; 
+            isDragging = true; 
+            canvas.selection = false; 
+            canvas.defaultCursor = 'grabbing';
+            lastPosX = evt.clientX; 
+            lastPosY = evt.clientY; 
+        } 
         else if (currentTool === 'eraser') { 
             isErasing = true; erasedSomething = false; deleteObjectsAtPointer(opt); 
         }
@@ -459,7 +434,13 @@ window.onload = function() {
     });
 
     canvas.on('mouse:move', function(opt) {
-        if (isDragging) { let e = opt.e; let vpt = canvas.viewportTransform; vpt[4] += e.clientX - lastPosX; vpt[5] += e.clientY - lastPosY; canvas.requestRenderAll(); lastPosX = e.clientX; lastPosY = e.clientY; } 
+        if (isDragging) { 
+            let e = opt.e; let vpt = canvas.viewportTransform; 
+            vpt[4] += e.clientX - lastPosX; 
+            vpt[5] += e.clientY - lastPosY; 
+            canvas.requestRenderAll(); 
+            lastPosX = e.clientX; lastPosY = e.clientY; 
+        } 
         else if (isErasing) { deleteObjectsAtPointer(opt); } 
         else if (isDrawingShape) {
             const pointer = canvas.getPointer(opt.e); const w = pointer.x - startX; const h = pointer.y - startY;
@@ -481,7 +462,11 @@ window.onload = function() {
     });
 
     canvas.on('mouse:up', function() {
-        if (isDragging) { canvas.setViewportTransform(canvas.viewportTransform); isDragging = false; } 
+        if (isDragging) { 
+            canvas.setViewportTransform(canvas.viewportTransform); 
+            isDragging = false;
+            if (currentTool === 'pan' && !isPanning) canvas.defaultCursor = 'grab';
+        } 
         else if (isErasing) { isErasing = false; if (erasedSomething) { saveState(); erasedSomething = false; } } 
         else if (isDrawingShape) { 
             isDrawingShape = false; 
@@ -514,7 +499,13 @@ window.onload = function() {
     canvas.on('object:modified', function() { saveState(); });
     canvas.on('mouse:wheel', function(opt) { let delta = opt.e.deltaY; let zoom = canvas.getZoom(); zoom *= 0.999 ** delta; zoom = Math.max(0.1, Math.min(zoom, 10)); canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom); opt.e.preventDefault(); opt.e.stopPropagation(); updateZoomLevel(); });
     document.addEventListener('keydown', function(e) { if (e.code === 'Space' && !canvas.isDrawingMode) { isPanning = true; canvas.defaultCursor = 'grab'; canvas.selection = false; } });
-    document.addEventListener('keyup', function(e) { if (e.code === 'Space') { isPanning = false; canvas.defaultCursor = (currentTool === 'eraser') ? eraserCursorUrl : ((currentTool.startsWith('shape-')) ? 'crosshair' : 'default'); canvas.selection = (currentTool === 'select'); } });
+    document.addEventListener('keyup', function(e) { 
+        if (e.code === 'Space') { 
+            isPanning = false; 
+            canvas.defaultCursor = (currentTool === 'pan') ? 'grab' : ((currentTool === 'eraser') ? eraserCursorUrl : ((currentTool.startsWith('shape-')) ? 'crosshair' : 'default')); 
+            canvas.selection = (currentTool === 'select'); 
+        } 
+    });
 
     function updateZoomLevel() { let zoom = Math.round(canvas.getZoom() * 100); document.getElementById('zoom-level').innerText = zoom + '%'; }
     document.getElementById('btn-zoom-in').addEventListener('click', function() { canvas.setZoom(canvas.getZoom() * 1.2); updateZoomLevel(); });
@@ -569,13 +560,9 @@ window.onload = function() {
     });
 
     document.getElementById('btn-share').addEventListener('click', function() {
-        if (!currentBoardId) {
-            showToast('Please save the board before sharing.', true);
-            return;
-        }
+        if (!currentBoardId) { showToast('Please save the board before sharing.', true); return; }
         const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${encodeURIComponent(BUCKET_NAME)}/${sanitizedUser}/${currentBoardId}.json`;
         const shareUrl = `${window.location.origin}${window.location.pathname}?load=${encodeURIComponent(publicUrl)}`;
-        
         document.getElementById('share-link-input').value = shareUrl;
         document.getElementById('share-modal').style.display = 'flex';
         document.getElementById('share-link-input').select();
@@ -596,26 +583,15 @@ window.onload = function() {
     try {
         const urlParams = new URLSearchParams(window.location.search);
         const loadUrl = urlParams.get('load');
-        
         if (loadUrl) {
-            fetch(loadUrl)
-                .then(res => res.json())
-                .then(board => {
-                    currentBoardId = board.id || 'shared_board_' + Date.now();
-                    currentBoardName = board.name || "Shared Board";
-                    isRestoring = true;
-                    canvas.loadFromJSON(board.data, function() { 
-                        canvas.renderAll(); 
-                        history = []; historyIndex = -1; saveState(); isRestoring = false; 
-                        showApp(); 
-                        showToast("Shared board loaded successfully!");
-                    });
-                })
-                .catch(err => {
-                    console.error("Share Load Error:", err);
-                    showToast("Failed to load shared board.", true);
-                    showLogin();
+            fetch(loadUrl).then(res => res.json()).then(board => {
+                currentBoardId = board.id || 'shared_board_' + Date.now();
+                currentBoardName = board.name || "Shared Board";
+                isRestoring = true;
+                canvas.loadFromJSON(board.data, function() { 
+                    canvas.renderAll(); history = []; historyIndex = -1; saveState(); isRestoring = false; showApp(); showToast("Shared board loaded successfully!");
                 });
+            }).catch(err => { console.error("Share Load Error:", err); showToast("Failed to load shared board.", true); showLogin(); });
         } else {
             let savedUser = localStorage.getItem('tw_current_user');
             if (savedUser) { currentUser = savedUser; sanitizedUser = currentUser.replace(/[^a-zA-Z0-9]/g, '_'); showHome(); } else { showLogin(); }
@@ -628,48 +604,29 @@ function closeShareModal() { document.getElementById('share-modal').style.displa
 
 function copyShareLink() {
     const input = document.getElementById('share-link-input');
-    input.select();
-    input.setSelectionRange(0, 99999);
-    
+    input.select(); input.setSelectionRange(0, 99999); 
     navigator.clipboard.writeText(input.value).then(function() {
-        showToast('Share link copied to clipboard!');
-        closeShareModal();
+        showToast('Share link copied to clipboard!'); closeShareModal();
     }, function(err) {
-        document.execCommand("copy");
-        showToast('Share link copied to clipboard!');
-        closeShareModal();
+        document.execCommand("copy"); showToast('Share link copied to clipboard!'); closeShareModal();
     });
 }
 
 async function confirmSave() {
     let name = document.getElementById('save-name-input').value.trim();
     if (name === "") name = "Untitled Board";
-    
     currentBoardName = name;
     document.getElementById('current-board-name').innerText = currentBoardName;
     if (!currentBoardId) { currentBoardId = 'board_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9); }
-
     let boardObj = { id: currentBoardId, user: currentUser, name: currentBoardName, data: canvas.toJSON(), timestamp: Date.now() };
-    
     const filePath = `${sanitizedUser}/${currentBoardId}.json`;
     const fileBody = new Blob([JSON.stringify(boardObj)], { type: 'application/json' });
-
     try {
-        const { data, error } = await supabaseClient.storage
-            .from(BUCKET_NAME)
-            .upload(filePath, fileBody, {
-                cacheControl: '3600',
-                upsert: true,
-                contentType: 'application/json'
-            });
-
+        const { data, error } = await supabaseClient.storage.from(BUCKET_NAME).upload(filePath, fileBody, { cacheControl: '3600', upsert: true, contentType: 'application/json' });
         if (error) throw error;
-        
-        closeSaveModal();
-        showToast('Saved to Supabase Cloud successfully!');
+        closeSaveModal(); showToast('Saved to Supabase Cloud successfully!');
     } catch (error) {
-        console.error("Supabase Save Error:", error);
-        showToast('Error saving to cloud: ' + error.message, true);
+        console.error("Supabase Save Error:", error); showToast('Error saving to cloud: ' + error.message, true);
     }
 }
 
@@ -714,70 +671,29 @@ function showApp() {
 async function renderCloudFolder() {
     let listContainer = document.getElementById('cloud-list');
     listContainer.innerHTML = '<p style="color:#605e5c; margin-top:20px;">Loading boards from Supabase Cloud...</p>';
-
     try {
-        const { data: files, error } = await supabaseClient
-            .storage
-            .from(BUCKET_NAME)
-            .list(sanitizedUser, {
-                limit: 100,
-                offset: 0,
-                sortBy: { column: 'created_at', order: 'desc' }
-            });
-
+        const { data: files, error } = await supabaseClient.storage.from(BUCKET_NAME).list(sanitizedUser, { limit: 100, offset: 0, sortBy: { column: 'created_at', order: 'desc' } });
         if (error) throw error;
-
         if (!files || files.length === 0 || (files.length === 1 && files[0].name === '.emptyFolderPlaceholder')) {
-            listContainer.innerHTML = '<p style="color:#605e5c; margin-top:20px;">No saved boards yet. Click "New Whiteboard" to start!</p>';
-            return;
+            listContainer.innerHTML = '<p style="color:#605e5c; margin-top:20px;">No saved boards yet. Click "New Whiteboard" to start!</p>'; return;
         }
-
-        listContainer.innerHTML = '';
-        let boards = [];
-
+        listContainer.innerHTML = ''; let boards = [];
         for (const file of files) {
             if (file.name === '.emptyFolderPlaceholder') continue;
             const filePath = `${sanitizedUser}/${file.name}`;
             const { data: fileData, error: dlError } = await supabaseClient.storage.from(BUCKET_NAME).download(filePath);
-            
             if (dlError) continue;
-            
-            const text = await fileData.text();
-            const json = JSON.parse(text);
-            
-            boards.push({
-                id: json.id || file.name.replace('.json', ''),
-                name: json.name || "Untitled",
-                timestamp: json.timestamp || Date.parse(file.updated_at) || Date.now()
-            });
+            const text = await fileData.text(); const json = JSON.parse(text);
+            boards.push({ id: json.id || file.name.replace('.json', ''), name: json.name || "Untitled", timestamp: json.timestamp || Date.parse(file.updated_at) || Date.now() });
         }
-
-        if (boards.length === 0) {
-            listContainer.innerHTML = '<p style="color:#605e5c; margin-top:20px;">No saved boards yet. Click "New Whiteboard" to start!</p>';
-            return;
-        }
-
+        if (boards.length === 0) { listContainer.innerHTML = '<p style="color:#605e5c; margin-top:20px;">No saved boards yet. Click "New Whiteboard" to start!</p>'; return; }
         boards.sort((a, b) => b.timestamp - a.timestamp);
-
         boards.forEach(function(board) {
-            let item = document.createElement('div');
-            item.className = 'cloud-item';
-            let dateObj = new Date(board.timestamp);
-            let dateStr = dateObj.toLocaleDateString() + " at " + dateObj.toLocaleTimeString();
-
-            item.innerHTML = `
-                <div class="cloud-item-info" onclick="loadBoardFromCloud('${board.id}')">
-                    <i class="fas fa-chalkboard"></i>
-                    <div>
-                        <h3>${board.name}</h3>
-                        <span>Last saved: ${dateStr}</span>
-                    </div>
-                </div>
-                <button class="delete-board-btn" onclick="deleteBoard('${board.id}')"><i class="fas fa-trash"></i></button>
-            `;
+            let item = document.createElement('div'); item.className = 'cloud-item';
+            let dateObj = new Date(board.timestamp); let dateStr = dateObj.toLocaleDateString() + " at " + dateObj.toLocaleTimeString();
+            item.innerHTML = `<div class="cloud-item-info" onclick="loadBoardFromCloud('${board.id}')"><i class="fas fa-chalkboard"></i><div><h3>${board.name}</h3><span>Last saved: ${dateStr}</span></div></div><button class="delete-board-btn" onclick="deleteBoard('${board.id}')"><i class="fas fa-trash"></i></button>`;
             listContainer.appendChild(item);
         });
-
     } catch (error) {
         console.error("Supabase List Error:", error);
         listContainer.innerHTML = `<p style="color:red; margin-top:20px;">Error loading boards: ${error.message}<br>Make sure your Supabase Bucket is set to PUBLIC.</p>`;
@@ -789,22 +705,12 @@ async function loadBoardFromCloud(id) {
     try {
         const { data, error } = await supabaseClient.storage.from(BUCKET_NAME).download(filePath);
         if (error) throw error;
-        
-        const text = await data.text();
-        const board = JSON.parse(text);
-        
-        currentBoardId = id; 
-        currentBoardName = board.name;
-        isRestoring = true;
-        canvas.loadFromJSON(board.data, function() { 
-            canvas.renderAll(); 
-            history = []; historyIndex = -1; saveState(); isRestoring = false; 
-            showApp(); 
-        });
+        const text = await data.text(); const board = JSON.parse(text);
+        currentBoardId = id; currentBoardName = board.name; isRestoring = true;
+        canvas.loadFromJSON(board.data, function() { canvas.renderAll(); history = []; historyIndex = -1; saveState(); isRestoring = false; showApp(); });
         showToast("Board loaded from cloud.");
     } catch (error) {
-        console.error("Supabase Load Error:", error);
-        showToast("Error loading board: " + error.message, true);
+        console.error("Supabase Load Error:", error); showToast("Error loading board: " + error.message, true);
     }
 }
 
@@ -814,12 +720,9 @@ async function deleteBoard(id) {
         try {
             const { error } = await supabaseClient.storage.from(BUCKET_NAME).remove([filePath]);
             if (error) throw error;
-            
-            renderCloudFolder();
-            showToast("Board deleted from cloud.");
+            renderCloudFolder(); showToast("Board deleted from cloud.");
         } catch (error) {
-            console.error("Supabase Delete Error:", error);
-            showToast("Error deleting board: " + error.message, true);
+            console.error("Supabase Delete Error:", error); showToast("Error deleting board: " + error.message, true);
         }
     }
 }
