@@ -294,19 +294,20 @@ window.onload = function() {
         if (btn) btn.addEventListener('click', function() {
             currentTool = tool; updateToolUI();
             if (tool === 'select') { 
-                canvas.isDrawingMode = false; canvas.selection = true; canvas.defaultCursor = 'default'; canvas.hoverCursor = 'move'; 
+                canvas.isDrawingMode = false; canvas.selection = true; canvas.skipTargetFind = false;
+                canvas.defaultCursor = 'default'; canvas.hoverCursor = 'move'; 
             } else if (tool === 'pan') { 
-                canvas.isDrawingMode = false; canvas.selection = false; 
-                canvas.defaultCursor = 'grab'; 
-                canvas.hoverCursor = 'grab';
+                canvas.isDrawingMode = false; canvas.selection = false; canvas.skipTargetFind = true;
+                canvas.defaultCursor = 'grab'; canvas.hoverCursor = 'grab';
             } else if (tool === 'eraser') { 
-                canvas.isDrawingMode = false; canvas.selection = false; 
-                canvas.defaultCursor = eraserCursorUrl; 
-                canvas.hoverCursor = eraserCursorUrl;
+                canvas.isDrawingMode = false; canvas.selection = false; canvas.skipTargetFind = false;
+                canvas.defaultCursor = eraserCursorUrl; canvas.hoverCursor = eraserCursorUrl;
             } else if (tool.startsWith('shape-')) { 
-                canvas.isDrawingMode = false; canvas.selection = false; canvas.defaultCursor = 'crosshair'; canvas.hoverCursor = 'crosshair'; 
+                canvas.isDrawingMode = false; canvas.selection = false; canvas.skipTargetFind = false;
+                canvas.defaultCursor = 'crosshair'; canvas.hoverCursor = 'crosshair'; 
             } else { 
-                canvas.isDrawingMode = true; canvas.selection = false; canvas.defaultCursor = 'default'; canvas.hoverCursor = 'default';
+                canvas.isDrawingMode = true; canvas.selection = false; canvas.skipTargetFind = false;
+                canvas.defaultCursor = 'default'; canvas.hoverCursor = 'default';
             }
         });
     });
@@ -416,33 +417,35 @@ window.onload = function() {
     }
 
     canvas.on('mouse:down', function(opt) {
-        if (isPanning || currentTool === 'pan') { 
-            let evt = opt.e; 
-            isDragging = true; 
-            canvas.selection = false; 
+        const evt = opt.e;
+        if (isPanning || currentTool === 'pan') {
+            isDragging = true;
+            canvas.selection = false;
             canvas.defaultCursor = 'grabbing';
-            lastPosX = evt.clientX; 
-            lastPosY = evt.clientY; 
-        } 
-        else if (currentTool === 'eraser') { 
+            canvas.hoverCursor = 'grabbing';
+            lastPosX = evt.clientX;
+            lastPosY = evt.clientY;
+            return;
+        } else if (currentTool === 'eraser') { 
             isErasing = true; erasedSomething = false; deleteObjectsAtPointer(opt); 
-        }
-        else if (currentTool.startsWith('shape-')) {
+        } else if (currentTool.startsWith('shape-')) {
             isDrawingShape = true; const pointer = canvas.getPointer(opt.e); startX = pointer.x; startY = pointer.y;
             activeShape = getShapeBase(currentTool); canvas.add(activeShape);
         }
     });
 
     canvas.on('mouse:move', function(opt) {
-        if (isDragging) { 
-            let e = opt.e; let vpt = canvas.viewportTransform; 
-            vpt[4] += e.clientX - lastPosX; 
-            vpt[5] += e.clientY - lastPosY; 
-            canvas.requestRenderAll(); 
-            lastPosX = e.clientX; lastPosY = e.clientY; 
-        } 
-        else if (isErasing) { deleteObjectsAtPointer(opt); } 
-        else if (isDrawingShape) {
+        if (isDragging) {
+            let e = opt.e;
+            let vpt = canvas.viewportTransform;
+            vpt[4] += e.clientX - lastPosX;
+            vpt[5] += e.clientY - lastPosY;
+            canvas.requestRenderAll();
+            lastPosX = e.clientX;
+            lastPosY = e.clientY;
+        } else if (isErasing) { 
+            deleteObjectsAtPointer(opt); 
+        } else if (isDrawingShape) {
             const pointer = canvas.getPointer(opt.e); const w = pointer.x - startX; const h = pointer.y - startY;
             if (currentTool === 'shape-line') { activeShape.set({ x2: pointer.x, y2: pointer.y }); } 
             else if (currentTool === 'shape-arrow') {
@@ -462,13 +465,16 @@ window.onload = function() {
     });
 
     canvas.on('mouse:up', function() {
-        if (isDragging) { 
-            canvas.setViewportTransform(canvas.viewportTransform); 
+        if (isDragging) {
+            canvas.setViewportTransform(canvas.viewportTransform);
             isDragging = false;
-            if (currentTool === 'pan' && !isPanning) canvas.defaultCursor = 'grab';
-        } 
-        else if (isErasing) { isErasing = false; if (erasedSomething) { saveState(); erasedSomething = false; } } 
-        else if (isDrawingShape) { 
+            if (currentTool === 'pan' || isPanning) {
+                canvas.defaultCursor = 'grab';
+                canvas.hoverCursor = 'grab';
+            }
+        } else if (isErasing) { 
+            isErasing = false; if (erasedSomething) { saveState(); erasedSomething = false; } 
+        } else if (isDrawingShape) { 
             isDrawingShape = false; 
             let isJustClick = false;
             if (currentTool === 'shape-line') {
@@ -498,13 +504,33 @@ window.onload = function() {
 
     canvas.on('object:modified', function() { saveState(); });
     canvas.on('mouse:wheel', function(opt) { let delta = opt.e.deltaY; let zoom = canvas.getZoom(); zoom *= 0.999 ** delta; zoom = Math.max(0.1, Math.min(zoom, 10)); canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom); opt.e.preventDefault(); opt.e.stopPropagation(); updateZoomLevel(); });
-    document.addEventListener('keydown', function(e) { if (e.code === 'Space' && !canvas.isDrawingMode) { isPanning = true; canvas.defaultCursor = 'grab'; canvas.selection = false; } });
-    document.addEventListener('keyup', function(e) { 
-        if (e.code === 'Space') { 
-            isPanning = false; 
-            canvas.defaultCursor = (currentTool === 'pan') ? 'grab' : ((currentTool === 'eraser') ? eraserCursorUrl : ((currentTool.startsWith('shape-')) ? 'crosshair' : 'default')); 
-            canvas.selection = (currentTool === 'select'); 
-        } 
+    
+    document.addEventListener('keydown', function(e) {
+        const activeObj = canvas.getActiveObject();
+        if (e.code === 'Space' && !canvas.isDrawingMode && !(activeObj && activeObj.isEditing)) {
+            isPanning = true;
+            canvas.defaultCursor = 'grab';
+            canvas.hoverCursor = 'grab';
+            canvas.selection = false;
+            canvas.skipTargetFind = true;
+        }
+    });
+
+    document.addEventListener('keyup', function(e) {
+        if (e.code === 'Space') {
+            isPanning = false;
+            canvas.skipTargetFind = (currentTool === 'pan');
+            if (currentTool === 'pan') {
+                canvas.defaultCursor = 'grab'; canvas.hoverCursor = 'grab';
+            } else if (currentTool === 'eraser') {
+                canvas.defaultCursor = eraserCursorUrl; canvas.hoverCursor = eraserCursorUrl;
+            } else if (currentTool.startsWith('shape-')) {
+                canvas.defaultCursor = 'crosshair'; canvas.hoverCursor = 'crosshair';
+            } else {
+                canvas.defaultCursor = 'default'; canvas.hoverCursor = 'move';
+            }
+            canvas.selection = (currentTool === 'select');
+        }
     });
 
     function updateZoomLevel() { let zoom = Math.round(canvas.getZoom() * 100); document.getElementById('zoom-level').innerText = zoom + '%'; }
