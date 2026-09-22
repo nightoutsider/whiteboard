@@ -982,5 +982,13 @@ closeModal('save-modal'); toast('Saved to cloud!');
 } catch(e) { toast('Save failed: ' + e.message, 'err'); }
 }
 </script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const badge = document.querySelector('a[href*="netlify.com"]');
+    if (badge) badge.remove();
+  });
+</script>
 </body>
 </html>
+
+
